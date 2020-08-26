@@ -1,0 +1,182 @@
+{
+    "schemaVersion": "1.14.0",
+    "class": "Device",
+    "async": true,
+    "label": "Learning BIG-IP DO v1",
+    "Common": {
+        "class": "Tenant",
+        "SystemConfig": {
+            "class": "System",
+            "hostname": "DOtesting1.lab.local",
+            "cliInactivityTimeout": 1200,
+            "consoleInactivityTimeout": 1200,
+            "autoPhonehome": false
+        },
+        "LicenceDetails": {
+            "class": "License",
+            "licenseType": "regKey",
+            "regKey": "XXLWE-JRWVG-LTFST-ULLVF-CJJIOFZ"
+        },
+        "DNSConfiguration": {
+            "class": "DNS",
+            "nameServers": [
+                "192.168.10.1",
+                "8.8.8.8"
+            ]
+        },
+        "NTPConfiguration": {
+            "class": "NTP",
+            "servers": [
+                "0.pool.ntp.org",
+                "1.pool.ntp.org",
+                "2.pool.ntp.org"
+            ],
+            "timezone": "BST"
+        },
+        "root": {
+            "class": "User",
+            "userType": "root",
+            "oldPassword": "P4ssw0rd@123",
+            "newPassword": "P4ssw0rd@123"
+        },
+        "admin": {
+            "class": "User",
+            "userType": "regular",
+            "password": "P4ssw0rd@123",
+            "shell": "bash"
+        },
+        "guestUser": {
+            "class": "User",
+            "userType": "regular",
+            "password": "P4ssw0rd@987",
+            "partitionAccess": {
+                "Common": {
+                    "role": "guest"
+                }
+            }
+        },
+        "anotherUser": {
+            "class": "User",
+            "userType": "regular",
+            "password": "mP4ssw0rd@987",
+            "shell": "none",
+            "partitionAccess": {
+                "all-partitions": {
+                    "role": "guest"
+                }
+            }
+        },
+        "myProvisioning": {
+            "class": "Provision",
+            "ltm": "nominal",
+            "gtm": "minimum"
+        },
+        "internal": {
+            "class": "VLAN",
+            "tag": 4093,
+            "mtu": 1500,
+            "interfaces": [
+                {
+                    "name": "1.2",
+                    "tagged": false
+                }
+            ],
+            "cmpHash": "default"
+        },
+        "internal-self": {
+            "class": "SelfIp",
+            "address": "10.10.0.2/24",
+            "vlan": "internal",
+            "allowService": "default",
+            "trafficGroup": "traffic-group-local-only"
+        },
+        "internal-self-float": {
+            "class": "SelfIp",
+            "address": "10.10.0.1/24",
+            "vlan": "internal",
+            "allowService": "default",
+            "trafficGroup": "traffic-group-1"
+        },
+        "external": {
+            "class": "VLAN",
+            "tag": 4094,
+            "mtu": 1500,
+            "interfaces": [
+                {
+                    "name": "1.1",
+                    "tagged": false
+                }
+            ],
+            "cmpHash": "default"
+        },
+        "external-self": {
+            "class": "SelfIp",
+            "address": "10.20.0.2/24",
+            "vlan": "external",
+            "allowService": "none",
+            "trafficGroup": "traffic-group-local-only"
+        },
+        "external-self-float": {
+            "class": "SelfIp",
+            "address": "10.20.0.1/24",
+            "vlan": "external",
+            "allowService": "default",
+            "trafficGroup": "traffic-group-1"
+        },
+        "HA": {
+            "class": "VLAN",
+            "tag": 4092,
+            "mtu": 1500,
+            "interfaces": [
+                {
+                    "name": "1.3",
+                    "tagged": false
+                }
+            ],
+            "cmpHash": "default"
+        },
+        "HA-self": {
+            "class": "SelfIp",
+            "address": "171.16.0.1/24",
+            "vlan": "internal",
+            "allowService": "default",
+            "trafficGroup": "traffic-group-local-only"
+        },
+        "default": {
+            "class": "Route",
+            "gw": "10.10.0.254",
+            "network": "default",
+            "mtu": 1500
+        },
+        "configSync": {
+            "class": "ConfigSync",
+            "configsyncIp": "172.16.0.1"
+        },
+        "failoverAddress": {
+            "class": "FailoverUnicast",
+            "address": "172.16.0.1"
+        },
+        "trust": {
+        	"class": "DeviceTrust",
+            "localUsername": "admin",
+            "localPassword": "P4ssw0rd@123",
+            "remoteHost": "172.16.0.2",
+            "remoteUsername": "admin",
+            "remotePassword": "P4ssw0rd@123"
+        },
+        "failoverGroup": {
+            "class": "DeviceGroup",
+            "type": "sync-failover",
+            "members": [
+                "192.168.10.102",
+                "192.168.10.103"
+            ],
+            "owner": "/Common/failoverGroup/members/0",
+            "autoSync": false,
+            "saveOnAutoSync": false,
+            "networkFailover": true,
+            "fullLoadOnSync": true,
+            "asmSync": false
+        }
+    }
+}
