@@ -8,7 +8,7 @@
   vars:
   
   vars_files:
-    - ../Creds/F5101_Creds.yml
+    - ../../creds/F5101_Creds.yml
 
   tasks:
   - name: Create AS3 App
